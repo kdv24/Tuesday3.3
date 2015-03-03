@@ -4,7 +4,7 @@
 
     $app = new Silex\Application();
 
-    $app->get("/app", function() {
+    $app->get("/home", function() {
         return
 
         "<!DOCTYPE html>
@@ -15,7 +15,7 @@
         </head>
         <body>
             <div class = 'container'>
-                <form action = 'car.php'>
+                <form action = '/car_search_results'>
                     <div class = 'form-group'>
                         <label for = 'max_mileage'>Enter the max_mileage</label>
                         <input id ='max_mileage' name ='max_mileage' class='form-control' type='number'>
@@ -30,11 +30,30 @@
         </body>
         </html>";
     });
-        return $app;
 
-    $app->get("/car_search", function() {
-        $new_car = new Car($_GET['max_price'], $_GET['max_mileage']);
-        
-    })
+    $app->get('/car_search_results', function() {
+
+        $car1 = new Car("Honda Civic", 2000, 1980, "img/honda.jpg", 12345);
+        $car2 = new Car("Volks Beetle", 1000, 1980, "img/bug.jpg", 5456);
+        $cars=array($car1, $car2);
+        $cars_matching = array();
+
+        $max_price = $_GET["max_price"];
+        $max_mileage = $_GET["max_mileage"];
+
+        foreach ($cars as $car){
+            if ($car->getPrice() < $max_price)
+            {
+                if($car->getMileage() < $max_mileage)
+                {
+                    array_push($cars_matching, $car);
+                }
+            }
+        }
+
+        return "It's your lucky day!";
+
+    });
+        return $app;
 
     ?>

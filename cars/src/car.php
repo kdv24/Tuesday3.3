@@ -51,3 +51,4 @@
             $this->img = $new_img;
         }
     }
+    
