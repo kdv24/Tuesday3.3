@@ -31,6 +31,9 @@
         </html>";
     });
 
+
+
+
     $app->get('/car_search_results', function() {
 
         $car1 = new Car("Honda Civic", 2000, 1980, "img/honda.jpg", 12345);
@@ -41,7 +44,7 @@
         $max_price = $_GET["max_price"];
         $max_mileage = $_GET["max_mileage"];
 
-        foreach ($cars as $car){
+        foreach ($cars as $car) {
             if ($car->getPrice() < $max_price)
             {
                 if($car->getMileage() < $max_mileage)
@@ -51,9 +54,23 @@
             }
         }
 
-        return "It's your lucky day!";
+            $output = "";
+            if(empty($cars_matching)) {
+                return "Sorry, no cars matched your criteria.";
+            }
+            else {
+                foreach($cars_matching as $car)
+                {
+                    $output = $output . "<ul>" .
+                     "<li>" . $car->getMake() . "</li>
+                    <li>" . $car->getPrice() . "</li>
+                    <img src=" . $car->getImg() . "></ul>";
+                }
+            }
 
-    });
+                return $output;
+
+            });
         return $app;
 
     ?>
