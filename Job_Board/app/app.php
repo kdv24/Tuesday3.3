@@ -38,6 +38,11 @@
 
     $app->get("/job_posting", function() {
       return "Hi there, I haven't gotten around to doing this part yet!";
+
+
+      // foreach ($job_openings as $job){
+      //   return $job->title;
+      //}
     });
 
     return $app;
